@@ -1,3 +1,8 @@
+*.DS_Store
+tmp/
+bin/
+logs/
+
 # Prerequisites
 *.d
 
