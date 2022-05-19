@@ -1,7 +1,12 @@
 *.DS_Store
+
 tmp/
 bin/
+
 logs/
+*.log
+
+.vscode/
 
 # Prerequisites
 *.d
