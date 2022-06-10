@@ -18,18 +18,19 @@ project "avm"
     {
         "extern/logging/",
         "extern/assert",
+        "extern/commandlinearguments",
         "source"
     }
 
     defines
     {
         "AVM_EASYLOGGINGPP_DEFINED",
-        "AVM_SNOWHOUSE_DEFINED"
+        "AVM_SNOWHOUSE_DEFINED",
+        "AVM_ARGUMENTUM_DEFINED"
     }
 
     files
     {
-        "extern/logging/easyloggingpp/src/easylogging++.h",
         "extern/logging/easyloggingpp/src/easylogging++.cc",
         "source/**.h",
         "source/**.cpp"

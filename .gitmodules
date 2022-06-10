@@ -6,3 +6,6 @@
 	path = extern/logging/easyloggingpp
 	url = https://github.com/amrayn/easyloggingpp.git
 	branch = v9.97.0
+[submodule "extern/commandlinearguments/argumentum"]
+	path = extern/commandlinearguments/argumentum
+	url = https://github.com/mmahnic/argumentum.git
