@@ -17,8 +17,8 @@ ifeq ($(config),release)
   OBJDIR = tmp/Release
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DAUTO_INITIALIZE_EASYLOGGINGPP -DAVM_EASYLOGGINGPP_DEFINED -DDEBUG -DAVM_RELEASE
-  INCLUDES += -Iextern/logging/easyloggingpp/src -Isource
+  DEFINES += -DAVM_EASYLOGGINGPP_DEFINED -DAVM_SNOWHOUSE_DEFINED -DDEBUG -DAVM_RELEASE
+  INCLUDES += -Iextern/logging -Iextern/assert -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2 -g -Wall -Wextra
@@ -46,8 +46,8 @@ ifeq ($(config),debug)
   OBJDIR = tmp/Debug
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DAUTO_INITIALIZE_EASYLOGGINGPP -DAVM_EASYLOGGINGPP_DEFINED -DDEBUG -DAVM_DEBUG
-  INCLUDES += -Iextern/logging/easyloggingpp/src -Isource
+  DEFINES += -DAVM_EASYLOGGINGPP_DEFINED -DAVM_SNOWHOUSE_DEFINED -DDEBUG -DAVM_DEBUG
+  INCLUDES += -Iextern/logging -Iextern/assert -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O0 -g
@@ -75,8 +75,8 @@ ifeq ($(config),profile)
   OBJDIR = tmp/Profile
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DAUTO_INITIALIZE_EASYLOGGINGPP -DAVM_EASYLOGGINGPP_DEFINED -DNDEBUG -DAVM_PFOFILE
-  INCLUDES += -Iextern/logging/easyloggingpp/src -Isource
+  DEFINES += -DAVM_EASYLOGGINGPP_DEFINED -DAVM_SNOWHOUSE_DEFINED -DNDEBUG -DAVM_PFOFILE
+  INCLUDES += -Iextern/logging -Iextern/assert -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
@@ -104,8 +104,8 @@ ifeq ($(config),final)
   OBJDIR = tmp/Final
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DAUTO_INITIALIZE_EASYLOGGINGPP -DAVM_EASYLOGGINGPP_DEFINED -DNDEBUG -DAVM_FINAL
-  INCLUDES += -Iextern/logging/easyloggingpp/src -Isource
+  DEFINES += -DAVM_EASYLOGGINGPP_DEFINED -DAVM_SNOWHOUSE_DEFINED -DNDEBUG -DAVM_FINAL
+  INCLUDES += -Iextern/logging -Iextern/assert -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -Werror -O2 -Wall -Wextra

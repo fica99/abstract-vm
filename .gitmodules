@@ -1,0 +1,8 @@
+[submodule "extern/assert/snowhouse"]
+	path = extern/assert/snowhouse
+	url = https://github.com/banditcpp/snowhouse
+	branch = headers-only
+[submodule "extern/logging/easyloggingpp"]
+	path = extern/logging/easyloggingpp
+	url = https://github.com/amrayn/easyloggingpp.git
+	branch = v9.97.0

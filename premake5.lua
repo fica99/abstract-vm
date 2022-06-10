@@ -16,14 +16,15 @@ project "avm"
 
     includedirs
     {
-        "extern/logging/easyloggingpp/src",
+        "extern/logging/",
+        "extern/assert",
         "source"
     }
 
     defines
     {
-        "AUTO_INITIALIZE_EASYLOGGINGPP",
-        "AVM_EASYLOGGINGPP_DEFINED"
+        "AVM_EASYLOGGINGPP_DEFINED",
+        "AVM_SNOWHOUSE_DEFINED"
     }
 
     files
