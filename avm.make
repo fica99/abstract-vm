@@ -18,7 +18,7 @@ ifeq ($(config),release)
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
   DEFINES += -DAVM_EASYLOGGINGPP_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_RELEASE
-  INCLUDES += -Iextern/logging -Iextern/assert -Iextern/commandlinearguments -Isource
+  INCLUDES += -Iextern/utils/logging -Iextern/utils/assert -Iextern/commandlinearguments -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2 -g -Wall -Wextra
@@ -47,7 +47,7 @@ ifeq ($(config),debug)
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
   DEFINES += -DAVM_EASYLOGGINGPP_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_DEBUG
-  INCLUDES += -Iextern/logging -Iextern/assert -Iextern/commandlinearguments -Isource
+  INCLUDES += -Iextern/utils/logging -Iextern/utils/assert -Iextern/commandlinearguments -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O0 -g
@@ -76,7 +76,7 @@ ifeq ($(config),profile)
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
   DEFINES += -DAVM_EASYLOGGINGPP_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DNDEBUG -DAVM_PFOFILE
-  INCLUDES += -Iextern/logging -Iextern/assert -Iextern/commandlinearguments -Isource
+  INCLUDES += -Iextern/utils/logging -Iextern/utils/assert -Iextern/commandlinearguments -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
@@ -105,7 +105,7 @@ ifeq ($(config),final)
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
   DEFINES += -DAVM_EASYLOGGINGPP_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DNDEBUG -DAVM_FINAL
-  INCLUDES += -Iextern/logging -Iextern/assert -Iextern/commandlinearguments -Isource
+  INCLUDES += -Iextern/utils/logging -Iextern/utils/assert -Iextern/commandlinearguments -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -Werror -O2 -Wall -Wextra
@@ -188,7 +188,7 @@ else
 $(OBJECTS): | $(OBJDIR)
 endif
 
-$(OBJDIR)/easylogging++.o: extern/logging/easyloggingpp/src/easylogging++.cc
+$(OBJDIR)/easylogging++.o: extern/utils/logging/easyloggingpp/src/easylogging++.cc
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/main.o: source/main/main.cpp

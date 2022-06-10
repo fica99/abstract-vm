@@ -16,8 +16,8 @@ project "avm"
 
     includedirs
     {
-        "extern/logging/",
-        "extern/assert",
+        "extern/utils/logging/",
+        "extern/utils/assert",
         "extern/commandlinearguments",
         "source"
     }
@@ -31,7 +31,7 @@ project "avm"
 
     files
     {
-        "extern/logging/easyloggingpp/src/easylogging++.cc",
+        "extern/utils/logging/easyloggingpp/src/easylogging++.cc",
         "source/**.h",
         "source/**.cpp"
     }
