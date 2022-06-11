@@ -17,7 +17,7 @@ ifeq ($(config),release)
   OBJDIR = tmp/Release
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DAVM_EASYLOGGINGPP_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_RELEASE
+  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_EASYLOGGINGPP_DEFINED -DAUTO_INITIALIZE_EASYLOGGINGPP -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_RELEASE
   INCLUDES += -Iextern/utils/logging -Iextern/utils/assert -Iextern/commandlinearguments -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
@@ -46,7 +46,7 @@ ifeq ($(config),debug)
   OBJDIR = tmp/Debug
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DAVM_EASYLOGGINGPP_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_DEBUG
+  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_EASYLOGGINGPP_DEFINED -DAUTO_INITIALIZE_EASYLOGGINGPP -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_DEBUG
   INCLUDES += -Iextern/utils/logging -Iextern/utils/assert -Iextern/commandlinearguments -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
@@ -75,7 +75,7 @@ ifeq ($(config),profile)
   OBJDIR = tmp/Profile
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DAVM_EASYLOGGINGPP_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DNDEBUG -DAVM_PFOFILE
+  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_EASYLOGGINGPP_DEFINED -DAUTO_INITIALIZE_EASYLOGGINGPP -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DNDEBUG -DAVM_PFOFILE
   INCLUDES += -Iextern/utils/logging -Iextern/utils/assert -Iextern/commandlinearguments -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
@@ -104,7 +104,7 @@ ifeq ($(config),final)
   OBJDIR = tmp/Final
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DAVM_EASYLOGGINGPP_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DNDEBUG -DAVM_FINAL
+  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_EASYLOGGINGPP_DEFINED -DAUTO_INITIALIZE_EASYLOGGINGPP -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DNDEBUG -DAVM_FINAL
   INCLUDES += -Iextern/utils/logging -Iextern/utils/assert -Iextern/commandlinearguments -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
@@ -130,6 +130,7 @@ OBJECTS := \
 	$(OBJDIR)/easylogging++.o \
 	$(OBJDIR)/main.o \
 	$(OBJDIR)/precomp.o \
+	$(OBJDIR)/logs.o \
 
 RESOURCES := \
 
@@ -191,10 +192,13 @@ endif
 $(OBJDIR)/easylogging++.o: extern/utils/logging/easyloggingpp/src/easylogging++.cc
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/main.o: source/main/main.cpp
+$(OBJDIR)/main.o: source/avm/main/main.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/precomp.o: source/precomp.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/logs.o: source/utils/logs/logs.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

@@ -24,7 +24,10 @@ project "avm"
 
     defines
     {
+        "avmBeginNamespace=namespace avm {",
+        "avmEndNamespace=}",
         "AVM_EASYLOGGINGPP_DEFINED",
+        "AUTO_INITIALIZE_EASYLOGGINGPP",
         "AVM_SNOWHOUSE_DEFINED",
         "AVM_ARGUMENTUM_DEFINED"
     }
@@ -32,7 +35,6 @@ project "avm"
     files
     {
         "extern/utils/logging/easyloggingpp/src/easylogging++.cc",
-        "source/**.h",
         "source/**.cpp"
     }
 
