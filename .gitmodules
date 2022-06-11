@@ -1,10 +1,10 @@
-[submodule "extern/utils/logging/easyloggingpp"]
-	path = extern/utils/logging/easyloggingpp
-	url = https://github.com/amrayn/easyloggingpp.git
-[submodule "extern/utils/assert/snowhouse"]
-	path = extern/utils/assert/snowhouse
+[submodule "extern/utils/asserts/snowhouse"]
+	path = extern/utils/asserts/snowhouse
 	url = https://github.com/banditcpp/snowhouse
 	branch = headers-only
 [submodule "extern/commandlinearguments/argumentum"]
 	path = extern/commandlinearguments/argumentum
 	url = https://github.com/mmahnic/argumentum.git
+[submodule "extern/utils/logs/spdlog"]
+	path = extern/utils/logs/spdlog
+	url = https://github.com/gabime/spdlog.git

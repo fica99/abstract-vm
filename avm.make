@@ -12,17 +12,17 @@ endif
 
 ifeq ($(config),release)
   RESCOMP = windres
-  TARGETDIR = bin/Release
-  TARGET = $(TARGETDIR)/avm
-  OBJDIR = tmp/Release
+  TARGETDIR = bin
+  TARGET = $(TARGETDIR)/avm_macosx_Release
+  OBJDIR = tmp/avm/Release
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_EASYLOGGINGPP_DEFINED -DAUTO_INITIALIZE_EASYLOGGINGPP -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_RELEASE
-  INCLUDES += -Iextern/utils/logging -Iextern/utils/assert -Iextern/commandlinearguments -Isource
+  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_SPDLOG_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_RELEASE
+  INCLUDES += -Iextern/utils/asserts -Iextern/commandlinearguments -Iextern/utils/logs/spdlog/include -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2 -g -Wall -Wextra
-  ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O2 -g -Wall -Wextra -std=c++20
+  ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O2 -g -std=c++20 -Wall -Wextra
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
   LIBS +=
   LDDEPS +=
@@ -41,17 +41,17 @@ endif
 
 ifeq ($(config),debug)
   RESCOMP = windres
-  TARGETDIR = bin/Debug
-  TARGET = $(TARGETDIR)/avm
-  OBJDIR = tmp/Debug
+  TARGETDIR = bin
+  TARGET = $(TARGETDIR)/avm_macosx_Debug
+  OBJDIR = tmp/avm/Debug
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_EASYLOGGINGPP_DEFINED -DAUTO_INITIALIZE_EASYLOGGINGPP -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_DEBUG
-  INCLUDES += -Iextern/utils/logging -Iextern/utils/assert -Iextern/commandlinearguments -Isource
+  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_SPDLOG_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_DEBUG
+  INCLUDES += -Iextern/utils/asserts -Iextern/commandlinearguments -Iextern/utils/logs/spdlog/include -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
-  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O0 -g
-  ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O0 -g -std=c++20
+  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -Og -g -Wall -Wextra
+  ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -Og -g -std=c++20 -Wall -Wextra
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
   LIBS +=
   LDDEPS +=
@@ -70,21 +70,21 @@ endif
 
 ifeq ($(config),profile)
   RESCOMP = windres
-  TARGETDIR = bin/Profile
-  TARGET = $(TARGETDIR)/avm
-  OBJDIR = tmp/Profile
+  TARGETDIR = bin
+  TARGET = $(TARGETDIR)/avm_macosx_Profile
+  OBJDIR = tmp/avm/Profile
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_EASYLOGGINGPP_DEFINED -DAUTO_INITIALIZE_EASYLOGGINGPP -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DNDEBUG -DAVM_PFOFILE
-  INCLUDES += -Iextern/utils/logging -Iextern/utils/assert -Iextern/commandlinearguments -Isource
+  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_SPDLOG_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DNDEBUG -DAVM_PFOFILE
+  INCLUDES += -Iextern/utils/asserts -Iextern/commandlinearguments -Iextern/utils/logs/spdlog/include -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
-  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
-  ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O2 -std=c++20
+  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O3 -g -Wall -Wextra
+  ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O3 -g -std=c++20 -Wall -Wextra
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
   LIBS +=
   LDDEPS +=
-  ALL_LDFLAGS += $(LDFLAGS) -Wl,-x
+  ALL_LDFLAGS += $(LDFLAGS)
   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
   define PREBUILDCMDS
   endef
@@ -99,17 +99,17 @@ endif
 
 ifeq ($(config),final)
   RESCOMP = windres
-  TARGETDIR = bin/Final
-  TARGET = $(TARGETDIR)/avm
-  OBJDIR = tmp/Final
+  TARGETDIR = bin
+  TARGET = $(TARGETDIR)/avm_macosx_Final
+  OBJDIR = tmp/avm/Final
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_EASYLOGGINGPP_DEFINED -DAUTO_INITIALIZE_EASYLOGGINGPP -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DNDEBUG -DAVM_FINAL
-  INCLUDES += -Iextern/utils/logging -Iextern/utils/assert -Iextern/commandlinearguments -Isource
+  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_SPDLOG_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DNDEBUG -DAVM_FINAL
+  INCLUDES += -Iextern/utils/asserts -Iextern/commandlinearguments -Iextern/utils/logs/spdlog/include -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
-  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -Werror -O2 -Wall -Wextra
-  ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -Werror -O2 -Wall -Wextra -std=c++20
+  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O3 -Wall -Wextra -Werror
+  ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O3 -std=c++20 -Wall -Wextra -Werror
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
   LIBS +=
   LDDEPS +=
@@ -127,7 +127,6 @@ all: prebuild prelink $(TARGET)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/easylogging++.o \
 	$(OBJDIR)/main.o \
 	$(OBJDIR)/precomp.o \
 	$(OBJDIR)/logs.o \
@@ -189,9 +188,6 @@ else
 $(OBJECTS): | $(OBJDIR)
 endif
 
-$(OBJDIR)/easylogging++.o: extern/utils/logging/easyloggingpp/src/easylogging++.cc
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/main.o: source/avm/main/main.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"

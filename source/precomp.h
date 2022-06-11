@@ -11,5 +11,5 @@
 
 #pragma once
 
-#include "utils/assert/assert.h"
+#include "utils/asserts/asserts.h"
 #include "utils/logs/logs.h"

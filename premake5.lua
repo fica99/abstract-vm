@@ -1,24 +1,23 @@
 workspace "abstract-vm"
     configurations { "Release", "Debug", "Profile", "Final" }
 
-outputdir = "%{cfg.buildcfg}"
-
 project "avm"
     kind "ConsoleApp"
     language "C++"
     cppdialect "C++latest"
     toolset "gcc"
-    targetdir ("bin/" .. outputdir)
-    objdir ("tmp/" .. outputdir)
-    
+    targetname ("%{prj.name}_%{cfg.system}_%{cfg.buildcfg}")
+    targetdir ("bin/")
+    objdir ("tmp/%{prj.name}/%{cfg.buildcfg}")
+
     pchheader "source/precomp.h"
     pchsource "source/precomp.cpp"
 
     includedirs
     {
-        "extern/utils/logging/",
-        "extern/utils/assert",
+        "extern/utils/asserts",
         "extern/commandlinearguments",
+        "extern/utils/logs/spdlog/include",
         "source"
     }
 
@@ -26,16 +25,20 @@ project "avm"
     {
         "avmBeginNamespace=namespace avm {",
         "avmEndNamespace=}",
-        "AVM_EASYLOGGINGPP_DEFINED",
-        "AUTO_INITIALIZE_EASYLOGGINGPP",
+        "AVM_SPDLOG_DEFINED",
         "AVM_SNOWHOUSE_DEFINED",
         "AVM_ARGUMENTUM_DEFINED"
     }
 
     files
     {
-        "extern/utils/logging/easyloggingpp/src/easylogging++.cc",
         "source/**.cpp"
+    }
+
+    buildoptions
+    {
+        "-Wall",
+        "-Wextra"
     }
 
     filter "configurations:Release"
@@ -44,7 +47,6 @@ project "avm"
             "DEBUG",
             "AVM_RELEASE"
         }
-        warnings "Extra"
         symbols "On"
         optimize "On"
 
@@ -55,7 +57,7 @@ project "avm"
             "AVM_DEBUG"
         }
         symbols "On"
-        optimize "Off"
+        optimize "Debug"
 
     filter "configurations:Profile"
         defines
@@ -63,8 +65,8 @@ project "avm"
             "NDEBUG",
             "AVM_PFOFILE"
         }
-        symbols "Off"
-        optimize "On"
+        symbols "On"
+        optimize "Speed"
 
     filter "configurations:Final"
         defines
@@ -72,12 +74,12 @@ project "avm"
             "NDEBUG",
             "AVM_FINAL"
         }
-        flags
+        buildoptions
         {
-            "FatalCompileWarnings",
-            "FatalLinkWarnings",
-            "FatalWarnings"
+            "-Werror"
         }
-        warnings "Extra"
         symbols "Off"
-        optimize "On"
+        optimize "Full"
+    
+    -- links {"spdlog"}
+

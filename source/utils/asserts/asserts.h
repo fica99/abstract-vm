@@ -1,5 +1,5 @@
 /**
- * @file assert.h
+ * @file asserts.h
  * @author Filip Crnobrnja (fica.c@yandex.ru)
  * @brief 
  * @version 0.1
