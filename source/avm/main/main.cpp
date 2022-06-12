@@ -11,8 +11,17 @@
 
 #include <precomp.h>
 
+avmBeginNamespace
+
+void Init(int argc, char **argv)
+{
+    avm::Logs::Init();
+}
+
+avmEndNamespace
+
 int main(int argc, char **argv)
 {
-    avm::Log::Init();
+    avm::Init(argc, argv);
     return (0);
 }

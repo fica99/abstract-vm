@@ -13,5 +13,4 @@
 
 #include <memory>
 
-#include "utils/asserts/asserts.h"
 #include "utils/logs/logs.h"

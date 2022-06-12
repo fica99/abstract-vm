@@ -18,7 +18,7 @@
 
 avmBeginNamespace
 
-class Log
+class Logs
 {
 public:
     static void Init(void);
@@ -46,4 +46,4 @@ avmEndNamespace
 #define AVM_CONSOLE_WARN(...)
 #define AVM_CONSOLE_INFO(...)
 
-#endif // AVM_SPDLOG_DEFINED
+#endif // !AVM_SPDLOG_DEFINED

@@ -15,9 +15,8 @@ project "avm"
 
     includedirs
     {
-        "extern/utils/asserts",
-        "extern/commandlinearguments",
         "extern/utils/logs/spdlog/include",
+        "extern/commandlinearguments/argumentum/include",
         "source"
     }
 
@@ -26,7 +25,6 @@ project "avm"
         "avmBeginNamespace=namespace avm {",
         "avmEndNamespace=}",
         "AVM_SPDLOG_DEFINED",
-        "AVM_SNOWHOUSE_DEFINED",
         "AVM_ARGUMENTUM_DEFINED"
     }
 
@@ -62,7 +60,7 @@ project "avm"
     filter "configurations:Profile"
         defines
         {
-            "NDEBUG",
+            "DEBUG",
             "AVM_PFOFILE"
         }
         symbols "On"
@@ -74,12 +72,10 @@ project "avm"
             "NDEBUG",
             "AVM_FINAL"
         }
+
         buildoptions
         {
             "-Werror"
         }
         symbols "Off"
         optimize "Full"
-    
-    -- links {"spdlog"}
-

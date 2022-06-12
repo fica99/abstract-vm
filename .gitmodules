@@ -1,7 +1,3 @@
-[submodule "extern/utils/asserts/snowhouse"]
-	path = extern/utils/asserts/snowhouse
-	url = https://github.com/banditcpp/snowhouse
-	branch = headers-only
 [submodule "extern/commandlinearguments/argumentum"]
 	path = extern/commandlinearguments/argumentum
 	url = https://github.com/mmahnic/argumentum.git

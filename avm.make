@@ -17,8 +17,8 @@ ifeq ($(config),release)
   OBJDIR = tmp/avm/Release
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_SPDLOG_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_RELEASE
-  INCLUDES += -Iextern/utils/asserts -Iextern/commandlinearguments -Iextern/utils/logs/spdlog/include -Isource
+  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_SPDLOG_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_RELEASE
+  INCLUDES += -Iextern/utils/logs/spdlog/include -Iextern/commandlinearguments/argumentum/include -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2 -g -Wall -Wextra
@@ -46,8 +46,8 @@ ifeq ($(config),debug)
   OBJDIR = tmp/avm/Debug
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_SPDLOG_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_DEBUG
-  INCLUDES += -Iextern/utils/asserts -Iextern/commandlinearguments -Iextern/utils/logs/spdlog/include -Isource
+  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_SPDLOG_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_DEBUG
+  INCLUDES += -Iextern/utils/logs/spdlog/include -Iextern/commandlinearguments/argumentum/include -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -Og -g -Wall -Wextra
@@ -75,8 +75,8 @@ ifeq ($(config),profile)
   OBJDIR = tmp/avm/Profile
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_SPDLOG_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DNDEBUG -DAVM_PFOFILE
-  INCLUDES += -Iextern/utils/asserts -Iextern/commandlinearguments -Iextern/utils/logs/spdlog/include -Isource
+  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_SPDLOG_DEFINED -DAVM_ARGUMENTUM_DEFINED -DDEBUG -DAVM_PFOFILE
+  INCLUDES += -Iextern/utils/logs/spdlog/include -Iextern/commandlinearguments/argumentum/include -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O3 -g -Wall -Wextra
@@ -104,8 +104,8 @@ ifeq ($(config),final)
   OBJDIR = tmp/avm/Final
   PCH = source/precomp.h
   GCH = $(OBJDIR)/$(notdir $(PCH)).gch
-  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_SPDLOG_DEFINED -DAVM_SNOWHOUSE_DEFINED -DAVM_ARGUMENTUM_DEFINED -DNDEBUG -DAVM_FINAL
-  INCLUDES += -Iextern/utils/asserts -Iextern/commandlinearguments -Iextern/utils/logs/spdlog/include -Isource
+  DEFINES += -DavmBeginNamespace=namespace\ avm\ { -DavmEndNamespace=} -DAVM_SPDLOG_DEFINED -DAVM_ARGUMENTUM_DEFINED -DNDEBUG -DAVM_FINAL
+  INCLUDES += -Iextern/utils/logs/spdlog/include -Iextern/commandlinearguments/argumentum/include -Isource
   FORCE_INCLUDE += -include $(OBJDIR)/$(notdir $(PCH))
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O3 -Wall -Wextra -Werror
@@ -127,6 +127,7 @@ all: prebuild prelink $(TARGET)
 endif
 
 OBJECTS := \
+	$(OBJDIR)/commandlinearguments.o \
 	$(OBJDIR)/main.o \
 	$(OBJDIR)/precomp.o \
 	$(OBJDIR)/logs.o \
@@ -188,6 +189,9 @@ else
 $(OBJECTS): | $(OBJDIR)
 endif
 
+$(OBJDIR)/commandlinearguments.o: source/avm/commandlinearguments/commandlinearguments.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/main.o: source/avm/main/main.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"

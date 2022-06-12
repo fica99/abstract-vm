@@ -17,10 +17,10 @@
 avmBeginNamespace
 
 #ifdef AVM_SPDLOG_DEFINED
-std::shared_ptr<spdlog::logger>	Log::s_ConsoleLogger = nullptr;
+std::shared_ptr<spdlog::logger>	Logs::s_ConsoleLogger = nullptr;
 #endif // AVM_SPDLOG_DEFINED
 
-void Log::Init(void)
+void Logs::Init(void)
 {
 #ifdef AVM_SPDLOG_DEFINED
     InitConsoleLogger();
@@ -28,7 +28,7 @@ void Log::Init(void)
 }
 
 #ifdef AVM_SPDLOG_DEFINED
-void Log::InitConsoleLogger(void)
+void Logs::InitConsoleLogger(void)
 {
     s_ConsoleLogger = spdlog::stdout_color_mt("ConsoleLogger");
     s_ConsoleLogger->set_pattern("%^%l%$: %v");
