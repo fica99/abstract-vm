@@ -1,10 +1,7 @@
-*.DS_Store
-
-tmp/
+logs/
 bin/
-
-*.log
-
+tmp/
+*.DS_Store
 .vscode/
 
 # Prerequisites

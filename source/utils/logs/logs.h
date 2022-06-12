@@ -8,16 +8,42 @@
  * @copyright Copyright (c) 2022
  * 
  */
-
 #pragma once
+
+#include <memory>
+
+#ifdef AVM_SPDLOG_DEFINED
+#include <spdlog/spdlog.h>
+#endif // AVM_SPDLOG_DEFINED
 
 avmBeginNamespace
 
-namespace LoggingHelper
+class Log
 {
+public:
+    static void Init(void);
+#ifdef AVM_SPDLOG_DEFINED
+    inline static std::shared_ptr<spdlog::logger>& GetConsoleLogger() { return s_ConsoleLogger; }
 
-void InitializeLogging(int argc, char **argv);
-
-}
+private:
+    static void InitConsoleLogger(void);
+private:
+    static std::shared_ptr<spdlog::logger> s_ConsoleLogger;
+#endif // AVM_SPDLOG_DEFINED
+};
 
 avmEndNamespace
+
+#ifdef AVM_SPDLOG_DEFINED
+
+#define AVM_CONSOLE_ERROR(...) ::avm::Log::GetConsoleLogger()->error(__VA_ARGS__)
+#define AVM_CONSOLE_WARN(...) ::avm::Log::GetConsoleLogger()->warn(__VA_ARGS__)
+#define AVM_CONSOLE_INFO(...) ::avm::Log::GetConsoleLogger()->info(__VA_ARGS__)
+
+#else
+
+#define AVM_CONSOLE_ERROR(...)
+#define AVM_CONSOLE_WARN(...)
+#define AVM_CONSOLE_INFO(...)
+
+#endif // AVM_SPDLOG_DEFINED
