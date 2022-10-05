@@ -1,6 +1,5 @@
-logs/
 bin/
-tmp/
+build/
 *.DS_Store
 .vscode/
 

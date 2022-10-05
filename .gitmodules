@@ -1,6 +1,7 @@
-[submodule "extern/commandlinearguments/argumentum"]
-	path = extern/commandlinearguments/argumentum
+[submodule "libs/commandlinearguments/argumentum"]
+	path = libs/commandlinearguments/argumentum
 	url = https://github.com/mmahnic/argumentum.git
-[submodule "extern/utils/logs/spdlog"]
-	path = extern/utils/logs/spdlog
+
+[submodule "libs/logs/spdlog"]
+	path = libs/logs/spdlog
 	url = https://github.com/gabime/spdlog.git

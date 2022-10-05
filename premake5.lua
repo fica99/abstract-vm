@@ -1,36 +1,26 @@
 workspace "abstract-vm"
-    configurations { "Release", "Debug", "Profile", "Final" }
+    configurations { "release", "debug" }
 
 project "avm"
     kind "ConsoleApp"
     language "C++"
     cppdialect "C++latest"
-    toolset "gcc"
-    targetname ("%{prj.name}_%{cfg.system}_%{cfg.buildcfg}")
+    toolset "clang"
+    targetname ("%{prj.name}_%{cfg.buildcfg}")
     targetdir ("bin/")
-    objdir ("tmp/%{prj.name}/%{cfg.buildcfg}")
+    objdir ("build/%{prj.name}/%{cfg.buildcfg}")
 
-    pchheader "source/precomp.h"
-    pchsource "source/precomp.cpp"
+    pchheader "src/avm/precomp.h"
+    pchsource "src/avm/precomp.cpp"
 
     includedirs
     {
-        "extern/utils/logs/spdlog/include",
-        "extern/commandlinearguments/argumentum/include",
-        "source"
-    }
-
-    defines
-    {
-        "avmBeginNamespace=namespace avm {",
-        "avmEndNamespace=}",
-        "AVM_SPDLOG_DEFINED",
-        "AVM_ARGUMENTUM_DEFINED"
+        "src"
     }
 
     files
     {
-        "source/**.cpp"
+        "src/**.cpp"
     }
 
     buildoptions
@@ -39,43 +29,18 @@ project "avm"
         "-Wextra"
     }
 
-    filter "configurations:Release"
-        defines
-        {
-            "DEBUG",
-            "AVM_RELEASE"
-        }
-        symbols "On"
-        optimize "On"
-
-    filter "configurations:Debug"
-        defines
-        {
-            "DEBUG",
-            "AVM_DEBUG"
-        }
-        symbols "On"
-        optimize "Debug"
-
-    filter "configurations:Profile"
-        defines
-        {
-            "DEBUG",
-            "AVM_PFOFILE"
-        }
-        symbols "On"
-        optimize "Speed"
-
-    filter "configurations:Final"
-        defines
-        {
-            "NDEBUG",
-            "AVM_FINAL"
-        }
-
+    filter "configurations:release"
+        symbols "Off"
+        optimize "Full"
         buildoptions
         {
             "-Werror"
         }
-        symbols "Off"
-        optimize "Full"
+        defines
+        {
+            "NDEBUG"
+        }
+
+    filter "configurations:debug"
+        symbols "On"
+        optimize "Off"
