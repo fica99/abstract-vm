@@ -9,28 +9,37 @@ ifndef verbose
 endif
 
 ifeq ($(config),release)
+  utils_config = release
   avm_config = release
 
 else ifeq ($(config),debug)
+  utils_config = debug
   avm_config = debug
 
 else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := avm
+PROJECTS := utils avm
 
 .PHONY: all clean help $(PROJECTS) 
 
 all: $(PROJECTS)
 
-avm:
+utils:
+ifneq (,$(utils_config))
+	@echo "==== Building utils ($(utils_config)) ===="
+	@${MAKE} --no-print-directory -C . -f utils.make config=$(utils_config)
+endif
+
+avm: utils
 ifneq (,$(avm_config))
 	@echo "==== Building avm ($(avm_config)) ===="
 	@${MAKE} --no-print-directory -C . -f avm.make config=$(avm_config)
 endif
 
 clean:
+	@${MAKE} --no-print-directory -C . -f utils.make clean
 	@${MAKE} --no-print-directory -C . -f avm.make clean
 
 help:
@@ -43,6 +52,7 @@ help:
 	@echo "TARGETS:"
 	@echo "   all (default)"
 	@echo "   clean"
+	@echo "   utils"
 	@echo "   avm"
 	@echo ""
 	@echo "For more information, see https://github.com/premake/premake-core/wiki"

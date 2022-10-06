@@ -30,13 +30,11 @@ endif
 PCH = src/avm/precomp.h
 PCH_PLACEHOLDER = $(OBJDIR)/$(notdir $(PCH))
 GCH = $(PCH_PLACEHOLDER).gch
-INCLUDES += -Isrc
+INCLUDES += -Isrc -Isrc/utils
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-LIBS +=
-LDDEPS +=
-ALL_LDFLAGS += $(LDFLAGS)
+ALL_LDFLAGS += $(LDFLAGS) -Wl,-rpath,'$$ORIGIN'
 LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
 define PREBUILDCMDS
 endef
@@ -47,19 +45,23 @@ endef
 
 ifeq ($(config),release)
 TARGETDIR = bin
-TARGET = $(TARGETDIR)/avm_release.exe
+TARGET = $(TARGETDIR)/avm_release
 OBJDIR = build/avm/release
 DEFINES += -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O3 -Wall -Wextra -Werror
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O3 -std=c++20 -Wall -Wextra -Werror
+LIBS += bin/libutils_release.so
+LDDEPS += bin/libutils_release.so
 
 else ifeq ($(config),debug)
 TARGETDIR = bin
-TARGET = $(TARGETDIR)/avm_debug.exe
+TARGET = $(TARGETDIR)/avm_debug
 OBJDIR = build/avm/debug
 DEFINES +=
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O0 -g -Wall -Wextra
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O0 -g -std=c++20 -Wall -Wextra
+LIBS += bin/libutils_debug.so
+LDDEPS += bin/libutils_debug.so
 
 endif
 
